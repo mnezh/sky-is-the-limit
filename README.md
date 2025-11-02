@@ -44,3 +44,10 @@ CLI values take precedence over file defaults.
 ```shell
 $ ./gradlew test -Pbase.url=[https://new-api.com](https://new-api.com)
 ```
+
+---
+
+## 📊 Reports
+
+The full, detailed HTML report is automatically generated after test completion at the standard Gradle location:
+* HTML Report Path: `build/reports/tests/test/index.html`
