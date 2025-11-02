@@ -5,7 +5,8 @@ import java.io.InputStream;
 import java.util.Properties;
 
 /**
- * Loads configuration values from src/main/resources/config.properties.
+ * Loads configuration values from src/main/resources/config.properties,
+ * allowing overrides via Java System Properties (e.g., from Gradle CLI).
  */
 public class ConfigReader {
     private static final Properties properties = new Properties();
@@ -26,10 +27,15 @@ public class ConfigReader {
     }
 
     public static String get(String key) {
-        String value = properties.getProperty(key);
-        if (value == null) {
+        String cliValue = System.getProperty(key);
+        if (cliValue != null) {
+            return cliValue.trim();
+        }
+
+        String fileValue = properties.getProperty(key);
+        if (fileValue == null) {
             throw new IllegalArgumentException("Missing configuration key: " + key);
         }
-        return value.trim();
+        return fileValue.trim();
     }
 }

@@ -24,6 +24,12 @@ dependencies {
 }
 
 test {
+    def whitelist = ['base.url', 'username', 'password']
+    project.properties.each { key, value ->
+        if (whitelist.contains(key)) {
+            systemProperty(key, value)
+        }
+    }
     useJUnitPlatform()
     systemProperty "cucumber.plugin", "pretty, summary"
     systemProperty "cucumber.publish.quiet", "true"
