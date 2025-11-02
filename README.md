@@ -47,6 +47,23 @@ $ ./gradlew test -Pbase.url=[https://new-api.com](https://new-api.com)
 
 ---
 
+## Filtering Tests using Cucumber Tags
+
+You can filter which scenarios run using the cucumber.filter.tags system property via the -P flag.
+
+The general syntax is:
+```shell
+$ ./gradlew test -Pcucumber.filter.tags="@TAG_NAME"
+```
+
+| Tag         | 	Description                                                                                             | 	Command Example                                      |
+|-------------|----------------------------------------------------------------------------------------------------------|-------------------------------------------------------|
+| @stable     | 	Runs core functional scenarios for the /auth endpoint (positive, negative, and structural checks).      | `./gradlew test -Pcucumber.filter.tags="@stable"`     |
+| @bug        | 	Runs scenarios that document known bugs.                                                                | `./gradlew test -Pcucumber.filter.tags="@bug"`        |
+| @resilience | 	Runs tests focused on non-functional robustness (e.g., enormous payloads and malicious string fuzzing). | `./gradlew test -Pcucumber.filter.tags="@resilience"` |
+
+---
+
 ## 📊 Reports
 
 The full, detailed HTML report is automatically generated after test completion at the standard Gradle location:

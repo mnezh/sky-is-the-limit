@@ -30,6 +30,9 @@ test {
             systemProperty(key, value)
         }
     }
+    if (project.hasProperty("tags")) {
+        systemProperty "cucumber.filter.tags", project.getProperty("tags")
+    }
     useJUnitPlatform()
     systemProperty "cucumber.plugin", "pretty, summary"
     systemProperty "cucumber.publish.quiet", "true"
