@@ -25,3 +25,8 @@ replay_pid*
 
 # IDE
 .vscode
+.idea
+
+# Gradle
+build
+.gradle

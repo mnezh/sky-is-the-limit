@@ -1,0 +1,31 @@
+plugins {
+    id 'java'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Cucumber
+    testImplementation "io.cucumber:cucumber-java:${cucumberVersion}"
+    testImplementation "io.cucumber:cucumber-junit-platform-engine:${cucumberVersion}"
+
+    // JUnit
+    testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
+    testImplementation "org.junit.platform:junit-platform-suite:${junitPlatformVersion}"
+}
+
+test {
+    useJUnitPlatform()
+    systemProperty "cucumber.plugin", "pretty, summary"
+    systemProperty "cucumber.publish.quiet", "true"
+    systemProperty "cucumber.execution.strict", "true"
+    systemProperty "cucumber.snippet-type", "camelcase"
+
+    testLogging {
+        showStandardStreams = true
+        events "passed", "failed", "skipped"
+    }
+}
