@@ -14,7 +14,13 @@ dependencies {
     // JUnit
     testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
-    testImplementation "org.junit.platform:junit-platform-suite:${junitPlatformVersion}"
+    testImplementation "org.junit.platform:junit-platform-suite:${junitVersion}"
+
+    // RestAssured
+    testImplementation "io.rest-assured:rest-assured:${restAssuredVersion}"
+
+    // Jackson for JSON serialization/deserialization
+    testImplementation "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
 }
 
 test {
@@ -25,7 +31,7 @@ test {
     systemProperty "cucumber.snippet-type", "camelcase"
 
     testLogging {
-        showStandardStreams = true
+        showStandardStreams = false
         events "passed", "failed", "skipped"
     }
 }
