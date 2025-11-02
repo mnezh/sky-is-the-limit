@@ -37,11 +37,7 @@ public class AuthSteps {
     }
 
     private String generateLargeString(int length) {
-        StringBuilder sb = new StringBuilder(length);
-        for (int i = 0; i < length; i++) {
-            sb.append('A');
-        }
-        return sb.toString();
+        return "A".repeat(length);
     }
 
     @Given("I have username {word}")
@@ -136,8 +132,8 @@ public class AuthSteps {
         }
     }
 
-    @When("I send {word} to auth")
-    public void i_send_http_method_to_auth(String method) {
+    @When("I send {word} to {string}")
+    public void i_send_http_method_to_auth(String method, String endpoint) {
         String httpMethod = method.toUpperCase();
         RequestSpecification requestSpec = given();
 
@@ -182,11 +178,11 @@ public class AuthSteps {
             scenario.log("Content-Type: " + finalContentType + " (Custom, No Body)");
         }
 
-        executeAndLogResponse(requestSpec, httpMethod, "/auth");
+        executeAndLogResponse(requestSpec, httpMethod, endpoint);
     }
 
-    @When("I send POST to auth with the raw body")
-    public void i_send_post_to_auth_with_the_raw_body() {
+    @When("I send POST to {string} with the raw body")
+    public void i_send_post_to_auth_with_the_raw_body(String endpoint) {
         assertNotNull(rawBody, "Raw body must be set before this step.");
 
         RequestSpecification requestSpec = given()
@@ -196,7 +192,7 @@ public class AuthSteps {
         scenario.log("Content-Type: application/json (Raw Body)");
         scenario.log("Request Payload (Raw): " + rawBody);
 
-        executeAndLogResponse(requestSpec, "POST", "/auth");
+        executeAndLogResponse(requestSpec, "POST", endpoint);
     }
 
 

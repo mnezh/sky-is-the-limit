@@ -8,7 +8,7 @@ Feature: Known Bugs on Authentication Endpoint
     Given I have username <valid>
     And I have password <valid>
     And the request Content-Type is set to "<Content-Type>"
-    When I send POST to auth
+    When I send POST to "/auth"
     Then the response status code should be 415
     And the response body should be plain text "Unsupported Media Type"
 
@@ -25,7 +25,7 @@ Feature: Known Bugs on Authentication Endpoint
 
   # BUG: The API returns 404 Not Found for unallowed methods (Expected: 405 Method Not Allowed).
   Scenario Outline: HTTP Method Check: <Method> should return 405 and "Not Found"
-    When I send <Method> to auth
+    When I send <Method> to "/auth"
     Then the response status code should be 405
 
     Examples:
@@ -39,7 +39,7 @@ Feature: Known Bugs on Authentication Endpoint
   Scenario Outline: Invalid credentials returns 401 (<Description>) and "Bad credentials"
     Given I have username <username>
     And I have password <password>
-    When I send POST to auth
+    When I send POST to "/auth"
     Then the response status code should be 401
     And the response body should only contain keys: "reason"
     And the response should contain reason "Bad credentials"
@@ -64,7 +64,7 @@ Feature: Known Bugs on Authentication Endpoint
   Scenario Outline: Connection-management header on <Method>
     Given I have username <valid>
     And I have password <valid>
-    When I send <Method> to auth
+    When I send <Method> to "/auth"
     Then the response status code should be 200
     And the response header "Connection" should be present
 

@@ -2,7 +2,7 @@
 Feature: Authentication endpoint is resilient
   Scenario Outline: Authentication fails: Enormous payload size for <Field> (Expected: 400 or 413)
     Given the request body contains a 500KB string for the <Field> field
-    When I send POST to auth with the raw body
+    When I send POST to "/auth" with the raw body
     Then the response status code should be 413
     And the response body should be plain text "Payload Too Large"
 
@@ -16,7 +16,7 @@ Feature: Authentication endpoint is resilient
       """
       {"username": "<username>", "password": "<password>"}
       """
-    When I send POST to auth with the raw body
+    When I send POST to "/auth" with the raw body
     Then the response status code should be 400
     And the response body should be plain text "Bad Request"
 
