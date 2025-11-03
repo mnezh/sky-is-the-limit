@@ -1,4 +1,4 @@
-@stable
+@auth @stable
 Feature: Authentication endpoint
 
   Scenario Outline: Successful authentication with valid credentials (<Description>)

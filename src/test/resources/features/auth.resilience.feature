@@ -1,4 +1,4 @@
-@stable @resilience
+@auth @stable @resilience
 Feature: Authentication endpoint is resilient
   Scenario Outline: Authentication fails: Enormous payload size for <Field> (Expected: 400 or 413)
     Given the request body contains a 500KB string for the <Field> field

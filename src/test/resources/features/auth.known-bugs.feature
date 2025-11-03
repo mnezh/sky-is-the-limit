@@ -1,4 +1,4 @@
-@bug
+@auth @bug
 Feature: Known Bugs on Authentication Endpoint
 
   # BUG: The API processes requests with unsupported Content-Types and returns a 200 OK,
