@@ -5,10 +5,9 @@ Feature: Known Bugs on Authentication Endpoint
   # instead of the expected 415 Unsupported Media Type.
   # It appears to ignore the Content-Type header and process the body as if it were valid JSON.
   Scenario Outline: Unsupported Content-Type (<Content-Type>) should return 415 and "Unsupported Media Type"
-    Given I have username <valid>
-    And I have password <valid>
+    Given I have username <valid> and password <valid>
     And the request Content-Type is set to "<Content-Type>"
-    When I send POST to "/auth"
+    When I POST payload to "/auth"
     Then the response status code should be 415
     And the response body should be plain text "Unsupported Media Type"
 
@@ -25,7 +24,7 @@ Feature: Known Bugs on Authentication Endpoint
 
   # BUG: The API returns 404 Not Found for unallowed methods (Expected: 405 Method Not Allowed).
   Scenario Outline: HTTP Method Check: <Method> should return 405 and "Not Found"
-    When I send <Method> to "/auth"
+    When I <Method> payload to "/auth"
     Then the response status code should be 405
 
     Examples:
@@ -37,12 +36,11 @@ Feature: Known Bugs on Authentication Endpoint
 
   # BUG: The API returns 200 OK for invalid credentials (Expected: 401 Unauthorized).
   Scenario Outline: Invalid credentials returns 401 (<Description>) and "Bad credentials"
-    Given I have username <username>
-    And I have password <password>
-    When I send POST to "/auth"
-    Then the response status code should be 401
-    And the response body should only contain keys: "reason"
+    Given I have username <username> and password <password>
+    When I POST payload to "/auth"
+    Then the response body should only contain keys: "reason"
     And the response should contain reason "Bad credentials"
+    And the response status code should be 401
 
     Examples:
       | Description                      | username     | password     |
@@ -62,9 +60,8 @@ Feature: Known Bugs on Authentication Endpoint
   # BUG: The API omits the Connection header, which is expected to be present
   # (e.g., Connection: keep-alive) for persistent connection management.
   Scenario Outline: Connection-management header on <Method>
-    Given I have username <valid>
-    And I have password <valid>
-    When I send <Method> to "/auth"
+    Given I have username <valid> and password <valid>
+    When I <Method> payload to "/auth"
     Then the response status code should be 200
     And the response header "Connection" should be present
 

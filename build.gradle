@@ -35,6 +35,9 @@ test {
         systemProperty "cucumber.filter.tags", project.getProperty("tags")
     }
     useJUnitPlatform()
+    doFirst {
+        file("build/reports/cucumber").mkdirs()
+    }
     systemProperty "cucumber.plugin", "pretty, summary"
     systemProperty "cucumber.publish.quiet", "true"
     systemProperty "cucumber.execution.strict", "true"
