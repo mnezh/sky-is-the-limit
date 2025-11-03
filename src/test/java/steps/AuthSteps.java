@@ -27,7 +27,6 @@ public class AuthSteps {
     public AuthSteps(ScenarioContext context) {
         this.context = context;
     }
-    // --- SETUP AND EXECUTION ---
 
     @Before
     public void setScenario(Scenario scenario) {
@@ -59,10 +58,8 @@ public class AuthSteps {
         }
     }
 
-    // --- GIVEN METHODS (Alphabetical) ---
-
     @Given("I have username {word} and password {word}")
-    public void i_have_credentials(String usernameRaw, String passwordRaw) {
+    public void i_set_username_and_password(String usernameRaw, String passwordRaw) {
         context.setPayload("username", TestUtils.parseValue(usernameRaw, "username"));
         context.setPayload("password", TestUtils.parseValue(passwordRaw, "password"));
     }
@@ -84,10 +81,8 @@ public class AuthSteps {
         context.setContentType(mimeType);
     }
 
-    // --- WHEN METHODS (Alphabetical) ---
-
     @When("I {word} payload to {string}")
-    public void i_send_json_with_http_method_to_endpoint(String method, String endpoint) throws JsonProcessingException {
+    public void i_send_payload_with_method_to_endpoint(String method, String endpoint) throws JsonProcessingException {
         RequestSpecification requestSpec = given();
         String contentType = context.getContentType("application/json");
         if ("application/x-www-form-urlencoded".equalsIgnoreCase(contentType)) {
@@ -108,7 +103,7 @@ public class AuthSteps {
     }
 
     @When("I {word} raw to {string}")
-    public void i_send_post_to_auth_with_the_raw_body(String method, String endpoint) {
+    public void i_send_raw_body_with_method_to_endpoint(String method, String endpoint) {
         String contentType = context.getContentType("application/json");
         RequestSpecification requestSpec = given().header("Content-Type", contentType);
         String payload = context.getRawBody();
@@ -116,8 +111,6 @@ public class AuthSteps {
         scenario.log("Content-Type: " + contentType + " payload: " + payload);
         executeAndLogResponse(requestSpec, method, endpoint);
     }
-
-    // --- THEN METHODS (Alphabetical) ---
 
     @Then("I store the token as {string}")
     public void i_store_the_token_as(String key) {
