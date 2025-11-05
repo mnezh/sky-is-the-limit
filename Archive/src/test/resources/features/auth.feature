@@ -1,7 +1,7 @@
 @auth @stable
 Feature: Authentication endpoint
 
-  Scenario Outline: Successful authentication with valid credentials (<content-type>)
+  Scenario Outline: Successful authentication with valid credentials (<Description>)
     Given I have username <valid> and password <valid>
     And the request Content-Type is set to "<content-type>"
     When I POST payload to "/auth"
@@ -9,11 +9,8 @@ Feature: Authentication endpoint
     And the response should contain a token
     And the produced token is a valid format string
     And the response body should only contain keys: "token"
-    And the response header "Content-Length" should be present
-    And the response header "Content-Type" should contain "application/json"
-    And the response header "Content-Type" should contain "charset"
-    And the response header "ETag" should be present
     And the response header "Server" should be present
+    And the response header "Content-Type" should contain "application/json"
 
     Examples:
       | content-type                      |

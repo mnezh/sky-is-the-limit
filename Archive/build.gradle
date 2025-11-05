@@ -22,7 +22,6 @@ dependencies {
 
     // Jackson for JSON serialization/deserialization
     testImplementation "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
-    testImplementation "com.fasterxml.jackson.dataformat:jackson-dataformat-xml:${jacksonVersion}"
 }
 
 test {

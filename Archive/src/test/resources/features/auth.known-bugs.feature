@@ -1,5 +1,5 @@
 @auth @bug
-Feature: Known Bugs of Authentication Endpoint
+Feature: Known Bugs on Authentication Endpoint
 
   # BUG: The API processes requests with unsupported Content-Types and returns a 200 OK,
   # instead of the expected 415 Unsupported Media Type.

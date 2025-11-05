@@ -17,8 +17,6 @@ public class ScenarioContext {
     // Key-value storage for request payload fields (e.g., username, password for JSON/Form bodies)
     private final Map<String, Object> payload = new HashMap<>();
 
-    private final Map<String, String> headers = new HashMap<>();
-
     // General-purpose key-value storage for scenario-scoped data (e.g., stored tokens, IDs)
     private final Map<String, String> data = new HashMap<>();
 
@@ -35,21 +33,8 @@ public class ScenarioContext {
         payload.put(key, value);
     }
 
-    public void setPayload(Map<String, Object> newPayload) {
-        payload.clear();
-        payload.putAll(newPayload);
-    }
-
-    public Map<String, Object> getPayload() {
+    public Map<String, Object> getPayload () {
         return payload;
-    }
-
-    public Map<String, String> getHeaders() {
-        return headers;
-    }
-
-    public void setHeader(String header, String value) {
-        headers.put(header, value);
     }
 
     public String getContentType() {

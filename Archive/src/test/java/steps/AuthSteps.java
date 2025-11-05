@@ -45,7 +45,8 @@ public class AuthSteps extends BaseSteps {
         assertFalse(token.trim().isEmpty(), "Token is empty.");
 
         Pattern alphanumericPattern = Pattern.compile("^[a-zA-Z0-9]+$");
-        assertTrue(alphanumericPattern.matcher(token).matches(), "Token value is not a simple alphanumeric string. Actual: " + token);
+        assertTrue(alphanumericPattern.matcher(token).matches(),
+                "Token value is not a simple alphanumeric string. Actual: " + token);
     }
 
 
@@ -65,7 +66,8 @@ public class AuthSteps extends BaseSteps {
     @Then("the response status code should be {int}")
     public void the_response_status_code_should_be(int expectedStatus) {
         int actualStatus = ctx.getResponse().statusCode();
-        assertEquals(expectedStatus, actualStatus, String.format("Unexpected status code. Expected: %d, but found: %d", expectedStatus, actualStatus));
+        assertEquals(expectedStatus, actualStatus,
+                String.format("Unexpected status code. Expected: %d, but found: %d", expectedStatus, actualStatus));
     }
 
     @Then("the token {string} is different from {string}")
