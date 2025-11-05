@@ -2,7 +2,7 @@
 
 Functional API test automation framework for the **Restful Booker API** using Java, Gradle, Cucumber, and Rest-Assured.
 
-Implements requirements based on the [assignment document](ASSIGNMENT.md).
+Implements requirements based on the [assignment document](ASSIGNMENT.md) following [this approach](SOLUTION.md).
 
 ---
 
