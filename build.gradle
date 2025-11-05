@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'com.diffplug.spotless' version "${spotlessVersion}"
 }
 
 repositories {
@@ -23,6 +24,13 @@ dependencies {
     // Jackson for JSON serialization/deserialization
     testImplementation "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
     testImplementation "com.fasterxml.jackson.dataformat:jackson-dataformat-xml:${jacksonVersion}"
+}
+
+spotless {
+    java {
+        googleJavaFormat()
+        endWithNewline()
+    }
 }
 
 test {
