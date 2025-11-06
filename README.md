@@ -2,7 +2,19 @@
 
 Functional API test automation framework for the **Restful Booker API** using **Java**, **Gradle**, **Cucumber**, and **Rest-Assured**.
 
-It implements the assignment requirements following a specific approach (see `ASSIGNMENT.md` and `SOLUTION.md`).
+It implements the assignment requirements following a specific approach (see [ASSIGNMENT.md](ASSIGNMENT.md) and [SOLUTION.md](SOLUTION.md)).
+
+---
+
+## 📚 Table of Contents
+* [💻 Requirements & Setup](#-requirements--setup)
+* [🚀 Execution & Reporting](#-execution--reporting)
+    * [Run Tests](#run-tests)
+    * [Code Formatting and Linting](#code-formatting-and-linting)
+    * [Reports](#reports)
+* [🐳 Running Tests in Docker](#-running-tests-in-docker)
+* [🛠️ Configuration Overrides (CLI)](#️-configuration-overrides-cli)
+* [Filtering Tests using Cucumber Tags](#filtering-tests-using-cucumber-tags)
 
 ---
 
@@ -40,9 +52,41 @@ This project uses the **Spotless** Gradle plugin with **Google Java Format** to 
 
 ### Reports
 
-The detailed **Cucumber Report** is automatically generated after test completion at the following path:
+The detailed **Cucumber Report** is automatically generated after test completion at the following path, unifying local and Docker output:
 
-* Report Path: `build/reports/cucumber/cucumber-report.html`
+* Report Location: `cucumber-reports/cucumber/cucumber-report.html`
+
+---
+
+## 🐳 Running Tests in Docker
+
+This framework is configured for consistent test execution using a single Docker image and the included `Makefile`.
+
+### 1. Build the Docker Image
+The `build` target uses the `Dockerfile` to create a self-contained image with all Java 25 and Gradle dependencies.
+
+```bash
+make build
+```
+
+### 2. Run All Tests
+The `run` target executes all tests. It automatically mounts your local `./cucumber-reports` directory to the container's `/reports` path.
+
+```bash
+make run
+```
+
+### 3. Run Tests with Tags/Overrides
+Use `run-with-args` to pass Cucumber tags or configuration properties via environment variables.
+
+```bash
+make run-with-args TAGS="@smoke" BASE_URL="http://dev.api"
+```
+
+### 4. Access Reports
+The reports are generated in a unified path on your host machine, whether running locally or in Docker.
+
+**Report Location:** `./cucumber-reports/cucumber/cucumber-report.html`
 
 ---
 

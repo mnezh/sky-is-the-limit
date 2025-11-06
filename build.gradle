@@ -43,11 +43,17 @@ test {
     if (project.hasProperty("tags")) {
         systemProperty "cucumber.filter.tags", project.getProperty("tags")
     }
+
+    def reportPath = project.hasProperty('report.path') ? project.getProperty('report.path') : 'cucumber-reports'
+
     useJUnitPlatform()
     doFirst {
-        file("build/reports/cucumber").mkdirs()
+        // Use the defined reportPath variable to create the directory
+        file("${reportPath}/cucumber").mkdirs()
     }
-    systemProperty "cucumber.plugin", "pretty, summary"
+
+    systemProperty "cucumber.plugin", "pretty, summary, html:${reportPath}/cucumber/cucumber-report.html"
+
     systemProperty "cucumber.publish.quiet", "true"
     systemProperty "cucumber.execution.strict", "true"
     systemProperty "cucumber.snippet-type", "camelcase"
@@ -55,6 +61,6 @@ test {
     testLogging {
         showStandardStreams = false
         exceptionFormat = 'full'
-        events "passed", "failed", "skipped"
+        events "passed", "skipped", "failed", "standardError"
     }
 }

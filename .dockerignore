@@ -1,0 +1,42 @@
+# Based on .gitignore, plus Docker-specific exclusions
+
+# Compiled class files
+*.class
+
+# Log files
+*.log
+
+# Package Files (artifacts we don't need in the build context)
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# Virtual machine crash logs
+hs_err_pid*
+replay_pid*
+
+# IDE/Editor files
+.vscode/
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Gradle artifacts and cache directories
+# The build directory is created by running tests and should be ignored here
+build/
+.gradle/
+# The 'gradle' directory contains the wrapper files and is needed, so we don't ignore it.
+
+# Operating System files
+.DS_Store
+
+# Docker itself
+Dockerfile
+.dockerignore
+# The Makefile is only for local execution, not needed inside the image
+Makefile

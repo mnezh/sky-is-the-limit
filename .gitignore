@@ -33,3 +33,6 @@ build
 
 # OS X
 .DS_Store
+
+# Cuke
+cucumber-reports
