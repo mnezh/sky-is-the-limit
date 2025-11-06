@@ -1,4 +1,4 @@
-@booking
+@booking @stable
 Feature: Create booking
 
   Scenario Outline: Create booking with valid data (<content-type>)

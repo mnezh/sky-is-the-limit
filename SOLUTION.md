@@ -2,6 +2,8 @@
 
 This project utilizes a **Behavior-Driven Development (BDD)** framework written in **Java** with **Cucumber** to create a structured and maintainable test suite for the `/auth` and `/booking` API endpoints. The strategy focuses on layering the test code to separate concerns: data management, HTTP execution, and endpoint-specific business logic. This separation is crucial for scalability and readability.
 
+---
+
 ### Core Technology Stack
 
 The test solution relies on **Gradle** for dependency management and build execution.
@@ -66,30 +68,36 @@ The test scenarios are logically grouped by endpoint and test focus:
 
 * **A. Stable Functionality (`auth.feature`)**
     * Successful Token Generation (JSON & URL-Encoded).
-    * Token Uniqueness and Format Validation.
-    * HTTP Method Check (`OPTIONS`).
+    * Token Uniqueness (Two sequential calls yield distinct tokens).
+    * Token Format and Response Body Key Validation.
+    * HTTP Method Check (`OPTIONS` returns `POST` allowed).
     * Malformed JSON Payload Error Handling (`400 Bad Request`).
+    * Required Response Headers (`Content-Length`, `Content-Type`, `ETag`, `Server`).
 * **B. Resilience and Security (`auth.resilience.feature`)**
-    * Payload Size Limits (`413 Payload Too Large`).
-    * Malicious String Injection (SQLi, XSS, Path Traversal).
+    * Payload Size Limits for `username` and `password` (`413 Payload Too Large`).
+    * Malicious String Injection Attempts (SQLi, XSS, Path Traversal, JSON Escape Sequence Bomb).
+    * Max Boundary String Length Check.
 * **C. Known Bugs (`auth.known-bugs.feature`)**
-    * Unsupported Content-Type (Expected `415`).
-    * Unallowed HTTP Methods (Expected `405`).
-    * Invalid Credentials (Expected `401`).
-    * Missing Connection Header.
+    * Unsupported Content-Type (Expected `415`, currently `200 OK`).
+    * Unallowed HTTP Methods (`GET`, `PUT`, `DELETE`, `PATCH`) (Expected `405`, currently `404 Not Found`).
+    * Invalid/Missing Credentials (Expected `401 Unauthorized`, currently `200 OK` for invalid credentials).
+    * Missing `Connection` Response Header.
 
 ### II. `/booking` (Booking Creation Endpoint)
 
 * **A. Stable Functionality (`booking.feature`)**
     * Successful Creation (JSON & XML Content-Type).
-    * Content Negotiation based on `Accept` header.
-    * HTTP Method Check (`OPTIONS`).
+    * Content Negotiation based on `Accept` header (`*/*`, `application/json`, `application/xml`).
+    * HTTP Method Check (`OPTIONS` returns `POST` allowed).
+    * Response Headers (`Content-Type`, `ETag`, `Server`).
 * **B. Resilience and Security (`booking.resilience.feature`)**
-    * Payload Size Limits (`413 Payload Too Large`) across all fields.
-    * Malicious String Injection Attempts (`firstname`, `lastname`).
+    * Payload Size Limits (`413 Payload Too Large`) across all fields (`firstname`, `lastname`, `totalprice`, `depositpaid`, `bookingdates`, `additionalneeds`).
+    * Malicious String Injection Attempts (SQLi, XSS, Path Traversal, JSON Escape Sequence Bomb).
+    * Max Boundary String Length Check.
 * **C. Known Bugs (`booking.known-bugs.feature`)**
-    * Duplicate Booking ID Bug.
-    * XML Content-Type Processing Failure (Actual: `500 Internal Server Error`).
-    * Missing Required Fields (Expected `400`).
-    * Invalid Date and Data Type Validation (Expected `400`).
-    * Incorrect Response Content-Type for XML `Accept`.
+    * Duplicate Booking ID Bug (Expected unique ID for each request).
+    * Valid XML Content-Type Processing Failure (Expected `200`, actual: `500 Internal Server Error`).
+    * Missing Required Fields (Expected `400 Bad Request`, actual: `500 Internal Server Error`).
+    * Invalid Date and Data Type Validation (Expected `400`, actual: `500 Internal Server Error` for some cases).
+    * Incorrect Response Content-Type for XML `Accept` (Expected: `application/xml` for `application/xml` accept, currently incorrect).
+    * Invalid Data Types being ignored (Expected `400 Bad Request`, actual: `200 OK` or different error).
